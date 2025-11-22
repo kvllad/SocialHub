@@ -1,9 +1,11 @@
 """
 AI Service for generating personalized tasks using DeepSeek API
 """
-import httpx
+import json
+import asyncio
 from typing import Optional
-from datetime import datetime, date
+from datetime import date
+from openai import OpenAI
 
 
 class AIService:
@@ -24,7 +26,7 @@ class AIService:
         user_age: int,
         user_interests: list[str],
         user_position: str,
-        user_department: str
+        user_department: str = ""
     ) -> Optional[dict]:
         """
         Generate a personalized task using DeepSeek API
@@ -34,89 +36,94 @@ class AIService:
         """
         interests_str = ", ".join(user_interests) if user_interests else "общие интересы"
 
-        prompt = f"""Ты — ИИ-агент для создания персонализированных заданий для сотрудников компании.
+        prompt = f"""Представь, что ты наставник сотрудника Сбера. Тебе нужно придумать для него индивидуальное задание, которое будет соответствовать его опыту, возрасту и интересам.
 
-Твоя задача — сгенерировать одно короткое, простое задание, которое сотрудник может выполнить в офисе за пару минут.
+Информация о сотруднике ниже:
+* **Возраст:** {user_age}
+* **Интересы (массив строк):** {interests_str}
+* **Должность:** {user_position}
 
-Информация о сотруднике:
-- Возраст: {user_age} лет
-- Интересы: {interests_str}
-- Должность: {user_position}
-- Отдел: {user_department}
+Сформируй ровно одно задание, которое он мог бы сделать только в офисе. Задание должно иметь структуру:
 
-Требования к заданию:
-1. Задание должно быть выполнено ТОЛЬКО В ОФИСЕ
-2. Задание должно быть простым и занимать не более 2 минут
-3. Задание должно учитывать интересы и должность сотрудника
-4. Награда: от 0 до 50 коинов (зависит от сложности)
-5. Задание должно быть конкретным и понятным
+[
+  {{
+    "название": "string",
+    "количество_баллов": number (0-50)
+  }}
+]
 
-Примеры хороших заданий:
-- "Поделись рецептом любимого блюда с коллегой" (10 коинов)
-- "Предложи идею для улучшения рабочего пространства" (20 коинов)
-- "Помоги коллеге с технической проблемой" (25 коинов)
-- "Организуй мини-опрос в своём отделе на интересную тему" (15 коинов)
-
-Верни ответ СТРОГО в формате JSON:
-{{"name": "текст задания", "coin_reward": число_от_0_до_50}}
-
-Только JSON, без дополнительного текста!"""
+**Требования:**
+* Баллы — целое число от 0 до 50.
+* Название должно соответствовать навыкам и интересам сотрудника.
+* Задание должно быть выполнимым только в офисе оффлайн
+* Не используй лишний текст, выводи только итоговый объект.
+* Задание должно быть легким и выполнимым за 2 минуты"""
 
         try:
-            async with httpx.AsyncClient() as client:
-                response = await client.post(
-                    f"{AIService.BASE_URL}/chat/completions",
-                    headers={
-                        "Authorization": f"Bearer {AIService.API_KEY}",
-                        "Content-Type": "application/json"
-                    },
-                    json={
-                        "model": AIService.MODEL,
-                        "messages": [
-                            {"role": "user", "content": prompt}
-                        ],
-                        "temperature": 0.8,
-                        "max_tokens": 150
-                    },
-                    timeout=30.0
+            # Run synchronous OpenAI client in thread pool
+            def _call_api():
+                client = OpenAI(
+                    api_key=AIService.API_KEY,
+                    base_url=AIService.BASE_URL
                 )
 
-                if response.status_code != 200:
-                    print(f"DeepSeek API error: {response.status_code} - {response.text}")
-                    return None
+                response = client.chat.completions.create(
+                    model=AIService.MODEL,
+                    messages=[
+                        {"role": "system", "content": "Ты наставник сотрудника Сбера, который генерирует персональные задания для офиса."},
+                        {"role": "user", "content": prompt}
+                    ],
+                    temperature=0.8,
+                    max_tokens=150
+                )
 
-                result = response.json()
+                return response.choices[0].message.content
 
-                # Extract the generated content
-                content = result["choices"][0]["message"]["content"].strip()
+            # Execute in thread pool to avoid blocking
+            loop = asyncio.get_event_loop()
+            content = await loop.run_in_executor(None, _call_api)
 
-                # Parse JSON from the response
-                import json
-                # Remove markdown code blocks if present
-                if content.startswith("```"):
-                    content = content.split("```")[1]
-                    if content.startswith("json"):
-                        content = content[4:].strip()
+            if not content:
+                print("DeepSeek API returned empty content")
+                return None
 
-                task_data = json.loads(content)
+            content = content.strip()
 
-                # Validate the response
-                if "name" not in task_data or "coin_reward" not in task_data:
-                    print(f"Invalid task data structure: {task_data}")
-                    return None
+            # Remove markdown code blocks if present
+            if content.startswith("```"):
+                lines = content.split("\n")
+                content = "\n".join(lines[1:-1])
+                if content.startswith("json"):
+                    content = content[4:].strip()
 
-                # Ensure coin_reward is within bounds
-                coin_reward = int(task_data["coin_reward"])
-                if coin_reward < 0:
-                    coin_reward = 0
-                elif coin_reward > 50:
-                    coin_reward = 50
+            # Parse JSON array
+            task_list = json.loads(content)
 
-                return {
-                    "name": str(task_data["name"]),
-                    "coin_reward": coin_reward
-                }
+            # Extract first task from array
+            if isinstance(task_list, list) and len(task_list) > 0:
+                task_data = task_list[0]
+            else:
+                task_data = task_list
+
+            # Validate the response structure
+            if "название" not in task_data or "количество_баллов" not in task_data:
+                print(f"Invalid task data structure: {task_data}")
+                return None
+
+            # Ensure coin_reward is within bounds
+            coin_reward = int(task_data["количество_баллов"])
+            if coin_reward < 0:
+                coin_reward = 0
+            elif coin_reward > 50:
+                coin_reward = 50
+
+            return {
+                "name": str(task_data["название"]),
+                "coin_reward": coin_reward
+            }
 
         except Exception as e:
             print(f"Error generating personalized task: {e}")
+            import traceback
+            traceback.print_exc()
             return None

@@ -74,7 +74,7 @@ async def complete_task(
 
 @router.post("/generate-personal", response_model=PersonalTaskResponse)
 async def generate_personal_task(
-    current_user: User = Depends(get_current_user_id),
+    user_id: User = Depends(get_current_user_id),
     db: AsyncSession = Depends(get_db)
 ):
     """
@@ -88,7 +88,7 @@ async def generate_personal_task(
     Задание действует 24 часа.
     Награда: 0-50 коинов (определяется AI на основе сложности).
     """
-    result = await TaskService.generate_personal_task(db, current_user.id)
+    result = await TaskService.generate_personal_task(db, user_id)
 
     if not result:
         raise HTTPException(
