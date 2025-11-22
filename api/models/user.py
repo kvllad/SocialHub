@@ -21,3 +21,5 @@ class User(BaseModel):
     coins = relationship("Coin", back_populates="user", cascade="all, delete-orphan")
     checkins = relationship("CheckIn", back_populates="user", cascade="all, delete-orphan")
     leagues = relationship("UserLeague", back_populates="user", cascade="all, delete-orphan")
+    completed_tasks = relationship("UserTask", back_populates="user", cascade="all, delete-orphan")
+    personal_tasks = relationship("Task", back_populates="user", cascade="all, delete-orphan")
