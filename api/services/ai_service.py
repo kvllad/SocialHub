@@ -3,6 +3,7 @@ AI Service for generating personalized tasks using DeepSeek API
 """
 import json
 import asyncio
+import os
 from typing import Optional
 from datetime import date
 from openai import OpenAI
@@ -11,9 +12,9 @@ from openai import OpenAI
 class AIService:
     """Service for AI-powered task generation using DeepSeek"""
 
-    API_KEY = "sk-0e56b8b0c41b4f2686402185972da809"
-    BASE_URL = "https://api.deepseek.com"
-    MODEL = "deepseek-chat"
+    API_KEY = os.getenv("API_KEY")
+    BASE_URL = os.getenv("https://api.deepseek.com")
+    MODEL = os.getenv("deepseek-chat")
 
     @staticmethod
     def calculate_age(date_of_birth: date) -> int:
@@ -71,7 +72,8 @@ class AIService:
                 response = client.chat.completions.create(
                     model=AIService.MODEL,
                     messages=[
-                        {"role": "system", "content": "Ты наставник сотрудника Сбера, который генерирует персональные задания для офиса."},
+                        {"role": "system",
+                         "content": "Ты наставник сотрудника Сбера, который генерирует персональные задания для офиса."},
                         {"role": "user", "content": prompt}
                     ],
                     temperature=1.5,
