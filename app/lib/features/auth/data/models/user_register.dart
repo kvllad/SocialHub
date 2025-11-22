@@ -10,11 +10,11 @@ abstract class UserRegister with _$UserRegister {
     required String surname,
     @JsonKey(name: 'phone_number') required String phoneNumber,
     required String office,
-    @JsonKey(name: 'date_of_birth') required DateTime dateOfBirth,
+    @JsonKey(name: 'date_of_birth') required String dateOfBirth,
     required String department,
     required List<String> interests,
     required String grade,
-    @JsonKey(name: 'company_start_date') required DateTime companyStartDate,
+    @JsonKey(name: 'company_start_date') required String companyStartDate,
     required String password,
   }) = _UserRegister;
 

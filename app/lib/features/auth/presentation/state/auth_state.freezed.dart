@@ -14,61 +14,30 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$AuthState {
 
- String get name;
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-$AuthStateCopyWith<AuthState> get copyWith => _$AuthStateCopyWithImpl<AuthState>(this as AuthState, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AuthState);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AuthState(name: $name)';
+  return 'AuthState()';
 }
 
 
 }
 
 /// @nodoc
-abstract mixin class $AuthStateCopyWith<$Res>  {
-  factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) _then) = _$AuthStateCopyWithImpl;
-@useResult
-$Res call({
- String name
-});
-
-
-
-
-}
-/// @nodoc
-class _$AuthStateCopyWithImpl<$Res>
-    implements $AuthStateCopyWith<$Res> {
-  _$AuthStateCopyWithImpl(this._self, this._then);
-
-  final AuthState _self;
-  final $Res Function(AuthState) _then;
-
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? name = null,}) {
-  return _then(_self.copyWith(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
-}
-
+class $AuthStateCopyWith<$Res>  {
+$AuthStateCopyWith(AuthState _, $Res Function(AuthState) __);
 }
 
 
@@ -86,11 +55,14 @@ extension AuthStatePatterns on AuthState {
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( _AuthState value)?  $default,{required TResult orElse(),}){
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>({TResult Function( _AuthStateIdle value)?  idle,TResult Function( _AuthStateLoading value)?  loading,TResult Function( _AuthStateSuccess value)?  success,TResult Function( _AuthStateFailure value)?  failure,required TResult orElse(),}){
 final _that = this;
 switch (_that) {
-case _AuthState() when $default != null:
-return $default(_that);case _:
+case _AuthStateIdle() when idle != null:
+return idle(_that);case _AuthStateLoading() when loading != null:
+return loading(_that);case _AuthStateSuccess() when success != null:
+return success(_that);case _AuthStateFailure() when failure != null:
+return failure(_that);case _:
   return orElse();
 
 }
@@ -108,11 +80,14 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( _AuthState value)  $default,){
+@optionalTypeArgs TResult map<TResult extends Object?>({required TResult Function( _AuthStateIdle value)  idle,required TResult Function( _AuthStateLoading value)  loading,required TResult Function( _AuthStateSuccess value)  success,required TResult Function( _AuthStateFailure value)  failure,}){
 final _that = this;
 switch (_that) {
-case _AuthState():
-return $default(_that);case _:
+case _AuthStateIdle():
+return idle(_that);case _AuthStateLoading():
+return loading(_that);case _AuthStateSuccess():
+return success(_that);case _AuthStateFailure():
+return failure(_that);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -129,11 +104,14 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( _AuthState value)?  $default,){
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>({TResult? Function( _AuthStateIdle value)?  idle,TResult? Function( _AuthStateLoading value)?  loading,TResult? Function( _AuthStateSuccess value)?  success,TResult? Function( _AuthStateFailure value)?  failure,}){
 final _that = this;
 switch (_that) {
-case _AuthState() when $default != null:
-return $default(_that);case _:
+case _AuthStateIdle() when idle != null:
+return idle(_that);case _AuthStateLoading() when loading != null:
+return loading(_that);case _AuthStateSuccess() when success != null:
+return success(_that);case _AuthStateFailure() when failure != null:
+return failure(_that);case _:
   return null;
 
 }
@@ -150,10 +128,13 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>({TResult Function()?  idle,TResult Function()?  loading,TResult Function()?  success,TResult Function()?  failure,required TResult orElse(),}) {final _that = this;
 switch (_that) {
-case _AuthState() when $default != null:
-return $default(_that.name);case _:
+case _AuthStateIdle() when idle != null:
+return idle();case _AuthStateLoading() when loading != null:
+return loading();case _AuthStateSuccess() when success != null:
+return success();case _AuthStateFailure() when failure != null:
+return failure();case _:
   return orElse();
 
 }
@@ -171,10 +152,13 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>({required TResult Function()  idle,required TResult Function()  loading,required TResult Function()  success,required TResult Function()  failure,}) {final _that = this;
 switch (_that) {
-case _AuthState():
-return $default(_that.name);case _:
+case _AuthStateIdle():
+return idle();case _AuthStateLoading():
+return loading();case _AuthStateSuccess():
+return success();case _AuthStateFailure():
+return failure();case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -191,10 +175,13 @@ return $default(_that.name);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>({TResult? Function()?  idle,TResult? Function()?  loading,TResult? Function()?  success,TResult? Function()?  failure,}) {final _that = this;
 switch (_that) {
-case _AuthState() when $default != null:
-return $default(_that.name);case _:
+case _AuthStateIdle() when idle != null:
+return idle();case _AuthStateLoading() when loading != null:
+return loading();case _AuthStateSuccess() when success != null:
+return success();case _AuthStateFailure() when failure != null:
+return failure();case _:
   return null;
 
 }
@@ -205,67 +192,129 @@ return $default(_that.name);case _:
 /// @nodoc
 
 
-class _AuthState implements AuthState {
-  const _AuthState({required this.name});
+class _AuthStateIdle implements AuthState {
+  const _AuthStateIdle();
   
 
-@override final  String name;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@override @JsonKey(includeFromJson: false, includeToJson: false)
-@pragma('vm:prefer-inline')
-_$AuthStateCopyWith<_AuthState> get copyWith => __$AuthStateCopyWithImpl<_AuthState>(this, _$identity);
+
 
 
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthState&&(identical(other.name, name) || other.name == name));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthStateIdle);
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,name);
+int get hashCode => runtimeType.hashCode;
 
 @override
 String toString() {
-  return 'AuthState(name: $name)';
+  return 'AuthState.idle()';
 }
 
 
 }
+
+
+
 
 /// @nodoc
-abstract mixin class _$AuthStateCopyWith<$Res> implements $AuthStateCopyWith<$Res> {
-  factory _$AuthStateCopyWith(_AuthState value, $Res Function(_AuthState) _then) = __$AuthStateCopyWithImpl;
-@override @useResult
-$Res call({
- String name
-});
 
 
+class _AuthStateLoading implements AuthState {
+  const _AuthStateLoading();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthStateLoading);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthState.loading()';
+}
 
 
 }
+
+
+
+
 /// @nodoc
-class __$AuthStateCopyWithImpl<$Res>
-    implements _$AuthStateCopyWith<$Res> {
-  __$AuthStateCopyWithImpl(this._self, this._then);
 
-  final _AuthState _self;
-  final $Res Function(_AuthState) _then;
 
-/// Create a copy of AuthState
-/// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? name = null,}) {
-  return _then(_AuthState(
-name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
-as String,
-  ));
+class _AuthStateSuccess implements AuthState {
+  const _AuthStateSuccess();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthStateSuccess);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthState.success()';
 }
 
 
 }
+
+
+
+
+/// @nodoc
+
+
+class _AuthStateFailure implements AuthState {
+  const _AuthStateFailure();
+  
+
+
+
+
+
+
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AuthStateFailure);
+}
+
+
+@override
+int get hashCode => runtimeType.hashCode;
+
+@override
+String toString() {
+  return 'AuthState.failure()';
+}
+
+
+}
+
+
+
 
 // dart format on

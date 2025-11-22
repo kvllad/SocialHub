@@ -23,6 +23,7 @@ dependencies:
   hive: ^2.2.3
   injectable: ^2.6.0
   json_annotation: ^4.9.0
+  logger: ^2.6.2
   theme_tailor: ^3.1.1
 
 dev_dependencies:

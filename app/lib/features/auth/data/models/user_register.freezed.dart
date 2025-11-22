@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$UserRegister {
 
- String get name; String get surname;@JsonKey(name: 'phone_number') String get phoneNumber; String get office;@JsonKey(name: 'date_of_birth') DateTime get dateOfBirth; String get department; List<String> get interests; String get grade;@JsonKey(name: 'company_start_date') DateTime get companyStartDate; String get password;
+ String get name; String get surname;@JsonKey(name: 'phone_number') String get phoneNumber; String get office;@JsonKey(name: 'date_of_birth') String get dateOfBirth; String get department; List<String> get interests; String get grade;@JsonKey(name: 'company_start_date') String get companyStartDate; String get password;
 /// Create a copy of UserRegister
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $UserRegisterCopyWith<$Res>  {
   factory $UserRegisterCopyWith(UserRegister value, $Res Function(UserRegister) _then) = _$UserRegisterCopyWithImpl;
 @useResult
 $Res call({
- String name, String surname,@JsonKey(name: 'phone_number') String phoneNumber, String office,@JsonKey(name: 'date_of_birth') DateTime dateOfBirth, String department, List<String> interests, String grade,@JsonKey(name: 'company_start_date') DateTime companyStartDate, String password
+ String name, String surname,@JsonKey(name: 'phone_number') String phoneNumber, String office,@JsonKey(name: 'date_of_birth') String dateOfBirth, String department, List<String> interests, String grade,@JsonKey(name: 'company_start_date') String companyStartDate, String password
 });
 
 
@@ -72,11 +72,11 @@ as String,surname: null == surname ? _self.surname : surname // ignore: cast_nul
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,office: null == office ? _self.office : office // ignore: cast_nullable_to_non_nullable
 as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
-as DateTime,department: null == department ? _self.department : department // ignore: cast_nullable_to_non_nullable
+as String,department: null == department ? _self.department : department // ignore: cast_nullable_to_non_nullable
 as String,interests: null == interests ? _self.interests : interests // ignore: cast_nullable_to_non_nullable
 as List<String>,grade: null == grade ? _self.grade : grade // ignore: cast_nullable_to_non_nullable
 as String,companyStartDate: null == companyStartDate ? _self.companyStartDate : companyStartDate // ignore: cast_nullable_to_non_nullable
-as DateTime,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
@@ -162,7 +162,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  DateTime dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  DateTime companyStartDate,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  String dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  String companyStartDate,  String password)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _UserRegister() when $default != null:
 return $default(_that.name,_that.surname,_that.phoneNumber,_that.office,_that.dateOfBirth,_that.department,_that.interests,_that.grade,_that.companyStartDate,_that.password);case _:
@@ -183,7 +183,7 @@ return $default(_that.name,_that.surname,_that.phoneNumber,_that.office,_that.da
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  DateTime dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  DateTime companyStartDate,  String password)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  String dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  String companyStartDate,  String password)  $default,) {final _that = this;
 switch (_that) {
 case _UserRegister():
 return $default(_that.name,_that.surname,_that.phoneNumber,_that.office,_that.dateOfBirth,_that.department,_that.interests,_that.grade,_that.companyStartDate,_that.password);case _:
@@ -203,7 +203,7 @@ return $default(_that.name,_that.surname,_that.phoneNumber,_that.office,_that.da
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  DateTime dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  DateTime companyStartDate,  String password)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String name,  String surname, @JsonKey(name: 'phone_number')  String phoneNumber,  String office, @JsonKey(name: 'date_of_birth')  String dateOfBirth,  String department,  List<String> interests,  String grade, @JsonKey(name: 'company_start_date')  String companyStartDate,  String password)?  $default,) {final _that = this;
 switch (_that) {
 case _UserRegister() when $default != null:
 return $default(_that.name,_that.surname,_that.phoneNumber,_that.office,_that.dateOfBirth,_that.department,_that.interests,_that.grade,_that.companyStartDate,_that.password);case _:
@@ -225,7 +225,7 @@ class _UserRegister implements UserRegister {
 @override final  String surname;
 @override@JsonKey(name: 'phone_number') final  String phoneNumber;
 @override final  String office;
-@override@JsonKey(name: 'date_of_birth') final  DateTime dateOfBirth;
+@override@JsonKey(name: 'date_of_birth') final  String dateOfBirth;
 @override final  String department;
  final  List<String> _interests;
 @override List<String> get interests {
@@ -235,7 +235,7 @@ class _UserRegister implements UserRegister {
 }
 
 @override final  String grade;
-@override@JsonKey(name: 'company_start_date') final  DateTime companyStartDate;
+@override@JsonKey(name: 'company_start_date') final  String companyStartDate;
 @override final  String password;
 
 /// Create a copy of UserRegister
@@ -271,7 +271,7 @@ abstract mixin class _$UserRegisterCopyWith<$Res> implements $UserRegisterCopyWi
   factory _$UserRegisterCopyWith(_UserRegister value, $Res Function(_UserRegister) _then) = __$UserRegisterCopyWithImpl;
 @override @useResult
 $Res call({
- String name, String surname,@JsonKey(name: 'phone_number') String phoneNumber, String office,@JsonKey(name: 'date_of_birth') DateTime dateOfBirth, String department, List<String> interests, String grade,@JsonKey(name: 'company_start_date') DateTime companyStartDate, String password
+ String name, String surname,@JsonKey(name: 'phone_number') String phoneNumber, String office,@JsonKey(name: 'date_of_birth') String dateOfBirth, String department, List<String> interests, String grade,@JsonKey(name: 'company_start_date') String companyStartDate, String password
 });
 
 
@@ -295,11 +295,11 @@ as String,surname: null == surname ? _self.surname : surname // ignore: cast_nul
 as String,phoneNumber: null == phoneNumber ? _self.phoneNumber : phoneNumber // ignore: cast_nullable_to_non_nullable
 as String,office: null == office ? _self.office : office // ignore: cast_nullable_to_non_nullable
 as String,dateOfBirth: null == dateOfBirth ? _self.dateOfBirth : dateOfBirth // ignore: cast_nullable_to_non_nullable
-as DateTime,department: null == department ? _self.department : department // ignore: cast_nullable_to_non_nullable
+as String,department: null == department ? _self.department : department // ignore: cast_nullable_to_non_nullable
 as String,interests: null == interests ? _self._interests : interests // ignore: cast_nullable_to_non_nullable
 as List<String>,grade: null == grade ? _self.grade : grade // ignore: cast_nullable_to_non_nullable
 as String,companyStartDate: null == companyStartDate ? _self.companyStartDate : companyStartDate // ignore: cast_nullable_to_non_nullable
-as DateTime,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
+as String,password: null == password ? _self.password : password // ignore: cast_nullable_to_non_nullable
 as String,
   ));
 }
