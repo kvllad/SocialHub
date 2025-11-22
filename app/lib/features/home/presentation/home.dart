@@ -16,17 +16,17 @@ class Home extends StatelessWidget {
       initialIndex: navigationShell.currentIndex,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Brainrot Project'),
+          title: const Text('Social Club'),
           bottom: TabBar(
             onTap: (index) => navigationShell.goBranch(
               index,
               initialLocation: index == navigationShell.currentIndex,
             ),
             tabs: const [
-              Tab(icon: Icon(Icons.home), text: 'Главная'),
-              Tab(icon: Icon(Icons.emoji_events), text: 'Лига'),
-              Tab(icon: Icon(Icons.shopping_bag), text: 'Магазин'),
-              Tab(icon: Icon(Icons.event), text: 'Мероприятия'),
+              Tab(text: 'Главная'),
+              Tab(text: 'Лига'),
+              Tab(text: 'Магазин'),
+              Tab(text: 'Мероприятия'),
             ],
           ),
         ),

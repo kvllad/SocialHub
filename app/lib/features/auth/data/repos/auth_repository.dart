@@ -1,5 +1,4 @@
 import 'package:app/core/logger/logger.dart';
-import 'package:app/di.dart';
 import 'package:app/features/auth/data/data/user_data.dart';
 import 'package:app/features/auth/data/models/user_login_req.dart';
 import 'package:app/features/auth/data/models/user_register.dart';
@@ -18,12 +17,25 @@ class AuthRepository {
 
   Future<void> register({required UserRegister request}) async {
     try {
-      final regResult = await _client.post('http://146.103.118.137:8000/register', data: request.toJson());
+      final regResult = await _client.post('http://146.103.118.137:8000/auth/register', data: request.toJson());
       final logRequest = UserLoginReq(phoneNumber: request.phoneNumber, password: request.password);
-      final logResult = await _client.post('http://146.103.118.137:8000/login', data: logRequest.toJson());
-      await _userData.saveToken(logResult.data.toString());
-      await _userData.saveUser(request);
-      logger.d('Success: ${regResult}: $logResult');
+      final logResult = await _client.post('http://146.103.118.137:8000/auth/login', data: logRequest.toJson());
+      final loginData = logResult.data;
+
+      if (loginData is Map<String, dynamic>) {
+        final token = loginData['access_token'] as String?;
+        if (token != null) {
+          await _userData.saveToken(token);
+        }
+
+        final userJson = loginData['user'];
+        if (userJson is Map<String, dynamic>) {
+          final mappedUser = Map<String, dynamic>.from(userJson)..['password'] = request.password;
+          await _userData.saveUser(UserRegister.fromJson(mappedUser));
+        }
+      }
+
+      logger.d('Success: ${regResult.data}: ${logResult.data}');
     } on Exception catch (e) {
       logger.e('Gained error: $e');
     }
