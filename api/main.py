@@ -7,7 +7,7 @@ from fastapi.middleware.cors import CORSMiddleware
 load_dotenv()
 load_dotenv(".env.local", override=True)
 
-from api.routes import auth, coins
+from api.routes import auth, coins, leagues
 
 app = fastapi.FastAPI(title="Brainrot API", version="1.0.0")
 
@@ -22,6 +22,7 @@ app.add_middleware(
 
 app.include_router(auth.router)
 app.include_router(coins.router)
+app.include_router(leagues.router)
 
 if __name__ == '__main__':
     uvicorn.run(

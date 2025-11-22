@@ -7,6 +7,7 @@ from api.database import get_db
 from api.models.user import User
 from api.schemas.user import UserRegisterSchema, UserLoginSchema, UserGetSchema
 from api.auth import get_password_hash, verify_password, create_access_token, ACCESS_TOKEN_EXPIRE_MINUTES
+from api.services.league_service import LeagueService
 
 router = APIRouter(prefix="/auth", tags=["authentication"])
 
@@ -43,6 +44,9 @@ async def register(user_data: UserRegisterSchema, db: AsyncSession = Depends(get
     db.add(new_user)
     await db.commit()
     await db.refresh(new_user)
+
+    # Initialize user in Bronze league
+    await LeagueService.initialize_user_league(db, new_user.id)
 
     return new_user
 

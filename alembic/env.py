@@ -18,6 +18,7 @@ load_dotenv(".env.local", override=True)
 from api.database import Base
 from api.models.user import User  # noqa: F401
 from api.models.coin import Coin, CheckIn  # noqa: F401
+from api.models.league import League, UserLeague, WeeklyLeaderboard  # noqa: F401
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

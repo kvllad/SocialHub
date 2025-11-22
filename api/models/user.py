@@ -20,3 +20,4 @@ class User(BaseModel):
     # Relationships
     coins = relationship("Coin", back_populates="user", cascade="all, delete-orphan")
     checkins = relationship("CheckIn", back_populates="user", cascade="all, delete-orphan")
+    leagues = relationship("UserLeague", back_populates="user", cascade="all, delete-orphan")

@@ -3,6 +3,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, func, and_
 from api.models.coin import Coin, CheckIn
 from api.models.user import User
+from api.services.league_service import LeagueService
 
 
 class CoinService:
@@ -10,8 +11,8 @@ class CoinService:
 
     # Streak multipliers
     STREAK_MULTIPLIERS = {
-        (1, 4): 1.0,    # Days 1-4: ×1 = 10 coins
-        (5, 9): 1.2,    # Days 5-9: ×1.2 = 12 coins
+        (1, 4): 1.0,  # Days 1-4: ×1 = 10 coins
+        (5, 9): 1.2,  # Days 5-9: ×1.2 = 12 coins
         (10, 14): 1.4,  # Days 10-14: ×1.4 = 14 coins
         (15, 19): 2.0,  # Days 15-19: ×2 = 20 coins
         (20, 30): 2.5,  # Days 20-30: ×2.5 = 25 coins
@@ -81,7 +82,8 @@ class CoinService:
             # Safety limit
             if streak > 365:
                 break
-
+        if streak == 0:
+            streak += 1
         return streak
 
     @staticmethod
@@ -132,8 +134,8 @@ class CoinService:
         Returns: (checkin, total_coins_earned, milestone_bonus)
         """
         # Check if today is a working day
-        if not CoinService.is_working_day(date.today()):
-            raise ValueError("Check-ins are only allowed on working days (Monday-Friday)")
+        # if not CoinService.is_working_day(date.today()):
+        #     raise ValueError("Check-ins are only allowed on working days (Monday-Friday)")
 
         # Check if already checked in today
         if await CoinService.check_if_already_checked_in_today(db, user_id):
@@ -178,6 +180,9 @@ class CoinService:
 
         await db.commit()
         await db.refresh(checkin)
+
+        # Update weekly league coins
+        await LeagueService.update_user_weekly_coins(db, user_id, total_coins)
 
         return checkin, total_coins, milestone_bonus
 
