@@ -8,7 +8,7 @@ load_dotenv(".env.local", override=True)
 
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    "postgresql+asyncpg://user:password@localhost/brainrot_db"
+    "postgresql+asyncpg://postgres:password@localhost:5432/postgres"
 )
 
 engine = create_async_engine(DATABASE_URL, echo=True)
