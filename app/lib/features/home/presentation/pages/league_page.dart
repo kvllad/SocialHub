@@ -660,7 +660,7 @@ class LeaderboardEntry {
       );
 
   String get initials {
-    if (name.isEmpty && surname.isEmpty) return '??';
+    if (name.isEmpty && surname.isEmpty) return 'XX';
     final first = name.isNotEmpty ? name[0] : '';
     final last = surname.isNotEmpty ? surname[0] : '';
     final result = (first + last).trim();

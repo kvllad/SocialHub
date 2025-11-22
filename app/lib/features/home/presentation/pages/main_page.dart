@@ -3,8 +3,15 @@ import 'package:app/features/auth/data/data/user_data.dart';
 import 'package:app/features/home/presentation/widgets/streak_widget.dart';
 import 'package:flutter/material.dart';
 
-class MainPage extends StatelessWidget {
+class MainPage extends StatefulWidget {
   const MainPage({super.key});
+
+  @override
+  State<MainPage> createState() => _MainPageState();
+}
+
+class _MainPageState extends State<MainPage> {
+  int streak = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -31,11 +38,13 @@ class MainPage extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 24),
-                      const StreakWidget(streak: 0), // Mock streak for now
+                      StreakWidget(streak: streak), // Mock streak for now
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () {
-                          // TODO: Implement check-in logic
+                          setState(() {
+                            streak = 1;
+                          });
                         },
                         style: ElevatedButton.styleFrom(
                           padding: const EdgeInsets.symmetric(vertical: 16),

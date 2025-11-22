@@ -57,7 +57,7 @@ class ShopPage extends StatelessWidget {
             icon: Icons.layers,
           ),
           _ShopProduct(
-            name: 'Кепка Social Club',
+            name: 'Кепка Social Hub',
             price: '3 рипа',
             buttonLabel: 'Повысить лигу',
             available: false,
@@ -77,7 +77,7 @@ class ShopPage extends StatelessWidget {
         tagColor: accent,
         products: const [
           _ShopProduct(
-            name: 'Магнит Social Club',
+            name: 'Магнит Social Hub',
             price: '1 рип',
             buttonLabel: 'Повысить лигу',
             available: false,

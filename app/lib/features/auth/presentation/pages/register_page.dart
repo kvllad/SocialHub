@@ -84,7 +84,7 @@ class _RegisterPageState extends State<RegisterPage> {
             const SizedBox(height: 16),
             TextField(decoration: InputDecoration(labelText: 'Интересы (через запятую)'), controller: _interestsController,),
             const SizedBox(height: 16),
-            TextField(decoration: InputDecoration(labelText: 'Класс'), controller: _gradeController,),
+            TextField(decoration: InputDecoration(labelText: 'Должность'), controller: _gradeController,),
             const SizedBox(height: 16),
             TextField(decoration: InputDecoration(labelText: 'Дата начала работы (YYYY-MM-DD)'), controller: _companyStartDateController,),
             const SizedBox(height: 16),

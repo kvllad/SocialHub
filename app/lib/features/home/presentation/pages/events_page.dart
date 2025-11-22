@@ -11,6 +11,8 @@ class EventsPage extends StatefulWidget {
 }
 
 class _EventsPageState extends State<EventsPage> {
+  int streak = 0;
+
   final HomeRepository _repository = HomeRepository();
 
   List<EventTask> allTasks = [];
@@ -56,10 +58,19 @@ class _EventsPageState extends State<EventsPage> {
   }
 
   Future<void> requestNewTask() async {
-    final newTask = await _repository.requestRandomTask();
+    final newTask = await _repository.requestAITask();
     if (newTask != null) {
       setState(() {
-        allTasks.add(newTask);
+        allTasks.add(
+          EventTask(
+            id: newTask.task_id,
+            name: newTask.name,
+            description: 'Новая сгенерированная задача',
+            coinReward: newTask.coin_reward,
+            taskType: 'АИ',
+            isActive: true,
+          ),
+        );
       });
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
@@ -147,7 +158,7 @@ class _EventsPageState extends State<EventsPage> {
 
     return Container(
       padding: const EdgeInsets.all(16),
-      color: Colors.blue.shade50,
+      color: Colors.black,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
@@ -226,17 +237,12 @@ class _EventsPageState extends State<EventsPage> {
     );
   }
 
-  List<Widget> buildTaskCards(List<EventTask> tasks,
-      {required bool isCompleted}) {
-    return tasks
-        .map((task) => _buildTaskCard(task, isCompleted: isCompleted))
-        .toList();
+  List<Widget> buildTaskCards(List<EventTask> tasks, {required bool isCompleted}) {
+    return tasks.map((task) => _buildTaskCard(task, isCompleted: isCompleted)).toList();
   }
 
   List<Widget> buildCompletedCards(List<EventTask> tasks) {
-    return tasks
-        .map((task) => _buildTaskCard(task, isCompleted: true))
-        .toList();
+    return tasks.map((task) => _buildTaskCard(task, isCompleted: true)).toList();
   }
 
   Widget _buildTaskCard(EventTask task, {required bool isCompleted}) {
@@ -260,21 +266,20 @@ class _EventsPageState extends State<EventsPage> {
                   ),
                 ),
                 Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
                     color: Colors.amber.shade100,
                     borderRadius: BorderRadius.circular(16),
                   ),
                   child: Row(
                     children: [
-                      const Icon(Icons.monetization_on,
-                          size: 16, color: Colors.amber),
+                      const Icon(Icons.monetization_on, size: 16, color: Colors.amber),
                       const SizedBox(width: 4),
                       Text(
                         '+${task.coinReward}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
+                          color: Colors.black
                         ),
                       ),
                     ],

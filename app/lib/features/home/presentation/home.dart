@@ -16,7 +16,7 @@ class Home extends StatelessWidget {
       initialIndex: navigationShell.currentIndex,
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Social Club'),
+          title: const Text('Social Hub'),
           bottom: TabBar(
             onTap: (index) => navigationShell.goBranch(
               index,

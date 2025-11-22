@@ -1,3 +1,4 @@
+import 'package:app/features/home/data/models/ai_task.dart';
 import 'package:dio/dio.dart';
 import '../models/event_task.dart';
 import '../models/task_stats.dart';
@@ -9,7 +10,7 @@ class HomeRepository {
   // Получить все задачи
   Future<List<EventTask>> getAllTasks() async {
     try {
-      final response = await _dio.get('/tasks');
+      final response = await _dio.get('/tasks/available');
       final List<dynamic> data = response.data;
       return data.map((json) => EventTask.fromJson(json)).toList();
     } catch (e) {
@@ -42,10 +43,10 @@ class HomeRepository {
   }
 
   // Запросить новое случайное задание
-  Future<EventTask?> requestRandomTask() async {
+  Future<AiTask?> requestAITask() async {
     try {
-      final response = await _dio.post('/tasks/random');
-      return EventTask.fromJson(response.data);
+      final response = await _dio.post('/tasks/generate-personal');
+      return AiTask.fromJson(response.data);
     } catch (e) {
       print('Error requesting random task: $e');
       return null;
