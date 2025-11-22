@@ -13,7 +13,7 @@ class AIService:
     """Service for AI-powered task generation using DeepSeek"""
 
     API_KEY = os.getenv("API_KEY")
-    BASE_URL = os.getenv("https://api.deepseek.com")
+    BASE_URL = os.getenv("BASE_URL")
     MODEL = os.getenv("deepseek-chat")
 
     @staticmethod
