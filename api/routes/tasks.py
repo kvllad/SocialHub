@@ -119,7 +119,7 @@ async def get_my_completions(
     - limit: максимальное количество записей (по умолчанию 50)
     - offset: смещение для пагинации (по умолчанию 0)
     """
-    completions = await TaskService.get_user_completions(db, get_current_user_id, limit, offset)
+    completions = await TaskService.get_user_completions(db, user_id, limit, offset)
     return completions
 
 
