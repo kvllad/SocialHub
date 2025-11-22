@@ -26,7 +26,7 @@ class Home extends StatelessWidget {
               Tab(text: 'Главная'),
               Tab(text: 'Лига'),
               Tab(text: 'Магазин'),
-              Tab(text: 'Мероприятия'),
+              Tab(text: 'Задания'),
             ],
           ),
         ),

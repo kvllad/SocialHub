@@ -1,3 +1,4 @@
+import 'package:app/core/router/router.dart';
 import 'package:app/di.dart';
 import 'package:app/features/auth/data/models/user_register.dart';
 import 'package:app/features/auth/data/repos/auth_repository.dart';
@@ -121,7 +122,9 @@ class _RegisterPageState extends State<RegisterPage> {
                       password: _passwordController.text,
                     );
                     setState(() {
-                      registerFuture = repo.register(request: request);
+                      registerFuture = repo.register(request: request).then((res) {
+                        router.go('/home');
+                      });
                     });
                   },
                   child: const Text('Зарегистрироваться'),
