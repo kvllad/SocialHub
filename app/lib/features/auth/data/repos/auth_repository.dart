@@ -18,11 +18,11 @@ class AuthRepository {
 
   Future<void> register({required UserRegister request}) async {
     try {
-
       final regResult = await _client.post('http://146.103.118.137:8000/register', data: request.toJson());
       final logRequest = UserLoginReq(phoneNumber: request.phoneNumber, password: request.password);
       final logResult = await _client.post('http://146.103.118.137:8000/login', data: logRequest.toJson());
       await _userData.saveToken(logResult.data.toString());
+      await _userData.saveUser(request);
       logger.d('Success: ${regResult}: $logResult');
     } on Exception catch (e) {
       logger.e('Gained error: $e');
