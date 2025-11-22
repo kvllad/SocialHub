@@ -1,11 +1,15 @@
-import 'package:app/core/network/dio_module.dart';
+import 'package:app/features/auth/data/models/user_login_req.dart';
+import 'package:dio/dio.dart';
 
 class AuthRepository {
-  AuthRepository({required DioModule client}) : _client = client;
+  AuthRepository({required Dio client}) : _client = client;
 
-  final DioModule _client;
+  final Dio _client;
 
-  void authorize() {
-    final result;
+  Future<String> login({required UserLoginReq request}) async {
+    final result = await _client.post('http://146.103.118.137:8000', data: request.toJson());
+    return result.data.toString();
   }
+
+  void logout() {}
 }
